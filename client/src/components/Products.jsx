@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { popularProducts } from "../data";
 import { mobile } from "../responsive";
@@ -23,6 +24,9 @@ const Container = styled.div`
 `;
 
 const Products = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Container>
       {popularProducts.map((product) => {

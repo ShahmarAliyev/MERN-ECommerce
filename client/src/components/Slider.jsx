@@ -106,10 +106,7 @@ const Slider = () => {
               <InfoContainer>
                 <Title>{item.title}</Title>
                 <Description>{item.desc}</Description>
-                <Button onClick={() => navigate("/productlist")}>
-                  {" "}
-                  SHOP NOW
-                </Button>
+                <Button onClick={() => navigate("/products")}> SHOP NOW</Button>
               </InfoContainer>
             </Slide>
           );

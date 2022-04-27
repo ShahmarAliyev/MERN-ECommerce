@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useNavigate } from "react-router-dom";
@@ -44,13 +44,19 @@ const Button = styled.button`
 
 const CategoryItem = ({ item }) => {
   const navigate = useNavigate();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container>
       <Image src={item.img} />
       <Info>
         <Title>{item.title}</Title>
-        <Button onClick={() => navigate("/product")}> SHOP NOW</Button>
+        <Button onClick={() => navigate(`/products/${item.cat}`)}>
+          {" "}
+          SHOP NOW
+        </Button>
       </Info>
     </Container>
   );
