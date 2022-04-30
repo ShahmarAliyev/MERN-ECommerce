@@ -15,4 +15,4 @@ const ProductsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exfports = mongoose.model("Product", ProductsSchema);
+module.exports = mongoose.model("Product", ProductsSchema);
