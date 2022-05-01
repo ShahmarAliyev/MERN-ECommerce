@@ -9,6 +9,9 @@ import { mobile } from "../responsive";
 import { useLocation } from "react-router-dom";
 // import { publicRequest } from "../requestMethod";
 import axios from "axios";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
+
 const Container = styled.div`
   background-color: #fff6ea;
 `;
@@ -119,7 +122,8 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-  console.log(color, size);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -143,7 +147,9 @@ const Product = () => {
     }
   };
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    dispatch(addProduct({ ...product, quantity, color, size }));
+  };
 
   return (
     <Container>

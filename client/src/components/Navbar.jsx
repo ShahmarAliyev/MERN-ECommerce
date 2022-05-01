@@ -4,6 +4,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../../src/responsive.js";
+
+import { useSelector } from "react-redux";
 const Container = styled.div`
   height: 60px;
   background-color: #fff6ea;
@@ -92,6 +94,9 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const cart = useSelector((state) => state.cart);
+
+  const cartQuantity = useSelector((state) => state.cart.cartQuantity);
   return (
     <Container>
       <Wrapper>
@@ -111,7 +116,7 @@ const Navbar = () => {
           <MenuItem>
             <Badge
               onClick={() => navigate("/cart")}
-              badgeContent={4}
+              badgeContent={cartQuantity}
               color="success"
             >
               <ShoppingCartOutlined />

@@ -4,7 +4,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
-
+import { useSelector } from "react-redux";
 const Container = styled.div`
   background-color: #fff6ea;
 `;
@@ -156,6 +156,8 @@ const SummaryButton = styled.button`
 `;
 
 const Cart = () => {
+  const cartState = useSelector((state) => state.cart);
+  const { cartProducts, cartQuantity, cartTotal } = cartState;
   return (
     <Container>
       <Navbar />
@@ -165,7 +167,7 @@ const Cart = () => {
         <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag({cartProducts.length})</TopText>
             <TopText>Your Wishlist(0)</TopText>
           </TopTexts>
 
@@ -173,63 +175,43 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetails>
-                <Image src="https://i.imgur.com/I3pMmYl.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Product: </b> High Heel Inspector
-                  </ProductName>
-                  <ProductId>
-                    <b>ID: </b> 426542682454
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>SIZE: </b> 9.5
-                  </ProductSize>
-                </Details>
-              </ProductDetails>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>$54</ProductPrice>
-              </PriceDetail>
-            </Product>
-            <Hr />
-            <Product>
-              <ProductDetails>
-                <Image src="https://i.imgur.com/sxGIY27.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Product: </b> Yellow Mellow Dress
-                  </ProductName>
-                  <ProductId>
-                    <b>ID: </b> 426542682454
-                  </ProductId>
-                  <ProductColor color="yellow" />
-                  <ProductSize>
-                    <b>SIZE: </b> 9.5
-                  </ProductSize>
-                </Details>
-              </ProductDetails>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>1</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>$49</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cartProducts.map((cartProduct) => {
+              return (
+                <Product key={cartProduct._id}>
+                  <ProductDetails>
+                    <Image src={cartProduct.img} />
+                    <Details>
+                      <ProductName>
+                        <b>Product: </b> {cartProduct.title}
+                      </ProductName>
+                      <ProductId>
+                        <b>ID: </b> {Product.id}
+                      </ProductId>
+                      <ProductColor color={cartProduct.color} />
+                      <ProductSize>
+                        <b>SIZE: </b> {cartProduct.size}
+                      </ProductSize>
+                    </Details>
+                  </ProductDetails>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <Add />
+                      <ProductAmount>{cartProduct.quantity}</ProductAmount>
+                      <Remove />
+                    </ProductAmountContainer>
+                    <ProductPrice>
+                      {cartProduct.price * cartProduct.quantity}
+                    </ProductPrice>
+                  </PriceDetail>
+                </Product>
+              );
+            })}
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>{cartTotal}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -241,7 +223,7 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cartTotal}</SummaryItemPrice>
             </SummaryItem>
 
             <SummaryButton>CHECKOUT NOW</SummaryButton>
