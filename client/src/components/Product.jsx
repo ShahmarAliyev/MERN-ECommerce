@@ -5,7 +5,7 @@ import {
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Icon = styled.div`
   opacity: 0;
@@ -90,16 +90,17 @@ const Container = styled.div`
 `;
 
 const Product = ({ product }) => {
-  const navigate = useNavigate();
   return (
-    <Container onClick={() => navigate("/product")}>
+    <Container>
       <Image src={product.img} />
       <Info>
         <Icon>
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <SearchOutlined />
+          <Link to={`/product/${product._id}`}>
+            <SearchOutlined />
+          </Link>
         </Icon>
         <Icon>
           <FavoriteBorderOutlined />
