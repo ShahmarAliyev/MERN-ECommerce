@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
+import axios from "axios";
 const Container = styled.div`
   background-color: #fff6ea;
 `;
@@ -118,11 +119,11 @@ const ProductPrice = styled.div`
   ${mobile({ marginBottom: "20px", marginLeft: "100px" })}
 `;
 
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 1px;
-`;
+// const Hr = styled.hr`
+//   background-color: #eee;
+//   border: none;
+//   height: 1px;
+// `;
 const Summary = styled.div`
   flex: 1;
   border: 0.5px solid lightgray;
@@ -153,11 +154,26 @@ const SummaryButton = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const Cart = () => {
   const cartState = useSelector((state) => state.cart);
-  const { cartProducts, cartQuantity, cartTotal } = cartState;
+  const { cartProducts, cartTotal } = cartState;
+  console.log(cartProducts);
+  const handleCheckout = () => {
+    axios
+      .post("http://localhost:5000/api/stripe/create-checkout-session", {
+        cartProducts: cartProducts,
+      })
+      .then((response) => {
+        if (response.data.url) {
+          window.location.href = response.data.url;
+        }
+      })
+      .catch((error) => console.log("failed" + error.message));
+  };
+
   return (
     <Container>
       <Navbar />
@@ -225,8 +241,9 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cartTotal}</SummaryItemPrice>
             </SummaryItem>
+            {/* <StripeButton>CHECKOUT NOW</StripeButton> */}
 
-            <SummaryButton>CHECKOUT NOW</SummaryButton>
+            <SummaryButton onClick={handleCheckout}>CHECKOUT NOW</SummaryButton>
           </Summary>
         </Bottom>
       </Wrapper>{" "}
