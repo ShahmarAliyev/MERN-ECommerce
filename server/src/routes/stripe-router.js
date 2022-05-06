@@ -1,4 +1,6 @@
 const stripeRouter = require("express").Router();
+require("dotenv").config({ path: "./.env" });
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 stripeRouter.post("/create-checkout-session", async (req, res) => {

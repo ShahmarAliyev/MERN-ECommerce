@@ -9,9 +9,10 @@ import ProductList from "./pages/ProductList";
 import { Routes, Route, Navigate } from "react-router-dom";
 import CheckoutSuccess from "./pages/Checkout-Success";
 import CheckoutFailure from "./pages/Checkout-Failure";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = true;
+  const user = useSelector((state) => state.user.currentUser);
   return (
     <Routes>
       <Route

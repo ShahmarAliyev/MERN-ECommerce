@@ -161,11 +161,20 @@ const Cart = () => {
   const cartState = useSelector((state) => state.cart);
   const { cartProducts, cartTotal } = cartState;
   console.log(cartProducts);
+
+  const config = {
+    headers: {
+      token: `Bearer ${process.env.REACT_APP_STRIPE}`,
+    },
+  };
+
   const handleCheckout = () => {
     axios
-      .post("http://localhost:5000/api/stripe/create-checkout-session", {
-        cartProducts: cartProducts,
-      })
+      .post(
+        "http://localhost:5000/api/stripe/create-checkout-session",
+        { cartProducts: cartProducts },
+        config
+      )
       .then((response) => {
         if (response.data.url) {
           window.location.href = response.data.url;

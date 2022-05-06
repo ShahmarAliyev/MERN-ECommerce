@@ -95,6 +95,7 @@ const MenuItem = styled.div`
 const Navbar = () => {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
 
   const cartQuantity = useSelector((state) => state.cart.cartQuantity);
   return (
@@ -111,8 +112,14 @@ const Navbar = () => {
           <Logo onClick={() => navigate("/")}>Board.</Logo>
         </Center>
         <Right>
-          <MenuItem onClick={() => navigate("/register")}>Register</MenuItem>
-          <MenuItem onClick={() => navigate("/login")}>Sign In</MenuItem>
+          {!user ? (
+            <MenuItem onClick={() => navigate("/register")}>Register</MenuItem>
+          ) : (
+            <MenuItem>Signout</MenuItem>
+          )}
+          {!user && (
+            <MenuItem onClick={() => navigate("/login")}>Sign In</MenuItem>
+          )}
           <MenuItem>
             <Badge
               onClick={() => navigate("/cart")}
