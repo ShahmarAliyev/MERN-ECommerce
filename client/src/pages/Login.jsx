@@ -66,6 +66,9 @@ const Button = styled.button`
     cursor: none;
   }
 `;
+const Error = styled.span`
+  color: red;
+`;
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -73,14 +76,14 @@ const Login = () => {
   const user = { username, password };
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isFetching, currentUser } = useSelector((state) => state.user);
+  const { isFetching, currentUser, error } = useSelector((state) => state.user);
 
   const handleClick = async (e) => {
     e.preventDefault();
     await login(dispatch, user);
-
-    currentUser && navigate("/");
   };
+  currentUser && navigate("/");
+
   return (
     <Container>
       <Wrapper>
@@ -95,13 +98,10 @@ const Login = () => {
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          {isFetching ? (
-            <Button onClick={handleClick} disabled>
-              LOADING
-            </Button>
-          ) : (
-            <Button onClick={handleClick}>LOGIN</Button>
-          )}
+          <Button onClick={handleClick} disabled={isFetching}>
+            LOGIN
+          </Button>
+          {error && <Error>Something went wrong...</Error>}
           <Link>Do not remember the password?</Link>
           <Link>Create a new account</Link>
         </Form>
