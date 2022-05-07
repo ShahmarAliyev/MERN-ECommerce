@@ -69,6 +69,7 @@ const Logo = styled.h1`
   ${mobile({
     fontSize: "24px",
   })}
+  cursor: pointer;
 `;
 
 const Right = styled.div`
@@ -94,7 +95,6 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user.currentUser);
 
   const cartQuantity = useSelector((state) => state.cart.cartQuantity);
