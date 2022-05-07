@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../data";
 import { mobile } from "../responsive";
 import Product from "./Product";
 import axios from "axios";
@@ -36,7 +35,6 @@ const Products = ({ category, filters, sort }) => {
             : "http://localhost:5000/api/products"
         );
         setProducts(res.data);
-        console.log(res.data);
       } catch (error) {
         console.log(error.response.data);
         if (!error.response) {
@@ -84,10 +82,10 @@ const Products = ({ category, filters, sort }) => {
     <Container>
       {category
         ? filteredProducts.map((product) => {
-            return <Product key={product.id} product={product} />;
+            return <Product key={product._id} product={product} />;
           })
         : products.map((product) => {
-            return <Product key={product.id} product={product} />;
+            return <Product key={product._id} product={product} />;
           })}
     </Container>
   );

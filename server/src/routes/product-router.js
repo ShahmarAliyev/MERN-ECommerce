@@ -32,7 +32,7 @@ productsRouter.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 
 productsRouter.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.user.id);
+    await Product.findByIdAndDelete(req.params.id);
     res.status(200).json("Product has been deleted");
   } catch (error) {
     res.status(500).json(error);
@@ -41,10 +41,10 @@ productsRouter.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 
 productsRouter.get("/find/:id", async (req, res) => {
   try {
-    const product = await Product.findById(req.user.id);
+    const product = await Product.findById(req.params.id);
     res.status(200).json(product);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json(error.message);
   }
 });
 
