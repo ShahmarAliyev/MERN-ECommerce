@@ -25,8 +25,8 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
     payment_method_types: ["card"],
     line_items,
     mode: "payment",
-    success_url: "http://localhost:3000/checkout-success",
-    cancel_url: "http://localhost:3000/cart",
+    success_url: "https://mern-board-ecommerce.herokuapp.com/checkout-success",
+    cancel_url: "https://mern-board-ecommerce.herokuapp.com/cart",
   });
 
   res.send({ url: session.url });
