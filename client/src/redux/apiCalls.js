@@ -15,7 +15,7 @@ export const login = async (dispatch, user) => {
   try {
     console.log(user);
     const res = await axios.post(
-      "http://localhost:5000/api/auth/login",
+      "https://mern-board-ecommerce.herokuapp.com/api/auth/login",
       user,
       bodyParameters,
       config
