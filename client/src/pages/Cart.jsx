@@ -171,7 +171,7 @@ const Cart = () => {
   const handleCheckout = () => {
     axios
       .post(
-        "http://localhost:5000/api/stripe/create-checkout-session",
+        "https://mern-board-ecommerce.herokuapp.com/api/stripe/create-checkout-session",
         { cartProducts: cartProducts },
         config
       )
