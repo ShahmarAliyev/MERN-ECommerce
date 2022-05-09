@@ -30,22 +30,27 @@ connectDB();
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header(
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://bucolic-twilight-22ffee.netlify.app"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader(
     "Access-Control-Allow-Headers",
-    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method token, Access-Control-Request-Headers"
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Authorization, Access-Control-Request-Headers"
   );
   next();
 });
 
-app.use(
-  cors({
-    origin: "https://bucolic-twilight-22ffee.netlify.app/",
-    methods: ["GET", "POST", "DELETE", "PUT"],
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://bucolic-twilight-22ffee.netlify.app",
+//     methods: ["GET", "POST", "DELETE", "PUT"],
+//     credentials: true, //access-control-allow-credentials:true
+//     optionSuccessStatus: 200,
+//   })
+// );
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
