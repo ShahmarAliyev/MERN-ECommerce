@@ -39,6 +39,13 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use(
+  cors({
+    origin: "https://bucolic-twilight-22ffee.netlify.app/",
+    methods: ["GET", "POST", "DELETE", "PUT"],
+  })
+);
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
