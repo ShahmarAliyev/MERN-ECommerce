@@ -129,7 +129,7 @@ const Product = () => {
       try {
         // const res = await publicRequest.get("products/find/" + _id);
         const res = await axios.get(
-          `https://mern-board-ecommerce.herokuapp.com/api/products/find/${_id}`
+          `https://boardmern.herokuapp.com/api/products/find/${_id}`
         );
         setProduct(res.data);
       } catch (error) {

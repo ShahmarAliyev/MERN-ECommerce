@@ -1,7 +1,9 @@
 const stripeRouter = require("express").Router();
-require("dotenv").config({ path: "./.env" });
+require("dotenv").config();
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(
+  "sk_test_51KMRQSJIocWJmNbIFEDo5wieUq3pTNz2sDg0CFqvuHcBUbM65IU1PWn0V6Jj1fa1HLihD3YDkgsSoQNJi3A3Q0k2002ATsn947"
+);
 
 stripeRouter.post("/create-checkout-session", async (req, res) => {
   const line_items = req.body.cartProducts.map((cartProduct) => {
@@ -25,8 +27,8 @@ stripeRouter.post("/create-checkout-session", async (req, res) => {
     payment_method_types: ["card"],
     line_items,
     mode: "payment",
-    success_url: "https://mern-board-ecommerce.herokuapp.com/checkout-success",
-    cancel_url: "https://mern-board-ecommerce.herokuapp.com/cart",
+    success_url: "https://boardmern.herokuapp.com/checkout-success",
+    cancel_url: "https://boardmern.herokuapp.com/cart",
   });
 
   res.send({ url: session.url });

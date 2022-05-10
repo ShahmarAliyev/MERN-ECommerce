@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+// const dotenv = require("dotenv");
 const cors = require("cors");
 const userRouter = require("./src/routes/user-router");
 const cartRouter = require("./src/routes/cart-router");
@@ -8,19 +9,16 @@ const authRouter = require("./src/routes/auth-router");
 const orderRouter = require("./src/routes/order-router");
 const stripeRouter = require("./src/routes/stripe-router");
 const productsRouter = require("./src/routes/product-router");
+const path = require("path");
 
-const dotenv = require("dotenv");
+require("dotenv").config({ path: ".env" });
 
-dotenv.config();
 const connectDB = async () => {
   try {
-    mongoose.connect(
-      "mongodb+srv://mern:test12345@ecommerce.m34kr.mongodb.net/shop?retryWrites=true&w=majority",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    );
+    mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("Successfully connected to Mongo DB");
   } catch (error) {
     console.log(error);
@@ -28,35 +26,19 @@ const connectDB = async () => {
 };
 connectDB();
 app.use(express.json());
+app.use(cors());
 
-app.use((req, res, next) => {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://bucolic-twilight-22ffee.netlify.app"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Authorization, Access-Control-Request-Headers"
-  );
-  next();
-});
-
-// app.use(
-//   cors({
-//     origin: "https://bucolic-twilight-22ffee.netlify.app",
-//     methods: ["GET", "POST", "DELETE", "PUT"],
-//     credentials: true, //access-control-allow-credentials:true
-//     optionSuccessStatus: 200,
-//   })
-// );
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/stripe", stripeRouter);
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
 
 app.listen(process.env.PORT, () => {
   console.log("Backend server is running on port 5000");

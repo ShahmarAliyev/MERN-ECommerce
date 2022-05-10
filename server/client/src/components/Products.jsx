@@ -31,8 +31,8 @@ const Products = ({ category, filters, sort }) => {
       try {
         const res = await axios.get(
           category
-            ? `https://mern-board-ecommerce.herokuapp.com/api/products?category=${category}`
-            : "https://mern-board-ecommerce.herokuapp.com/api/products"
+            ? `https://boardmern.herokuapp.com/api/products?category=${category}`
+            : "https://boardmern.herokuapp.com/api/products"
         );
         setProducts(res.data);
       } catch (error) {
